@@ -1,0 +1,157 @@
+/* Sistema de diseño global: paleta, tipografía y utilidades comunes */
+:root {
+  --color-salvia: #A5A79B;
+  --color-crema: #E8D2B5;
+  --color-granate: #590907;
+
+  --fondo: var(--color-crema);
+  --superficie: rgba(255, 255, 255, 0.38);
+  --superficie-solida: #f5ebdd;
+  --borde: rgba(89, 9, 7, 0.14);
+  --texto: var(--color-granate);
+  --texto-suave: rgba(89, 9, 7, 0.72);
+  --sombra: 0 14px 36px -18px rgba(89, 9, 7, 0.35);
+  --radio: 16px;
+
+  --fuente-titulo: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --fuente-texto: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--fuente-texto);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fuente-titulo);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0 0 0.5em;
+}
+
+button,
+input,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 999px;
+  padding: 0.7em 1.4em;
+  background: var(--color-granate);
+  color: var(--color-crema);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease, opacity 0.2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px -10px rgba(89, 9, 7, 0.6);
+}
+
+button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button.secundario {
+  background: var(--color-salvia);
+  color: var(--color-granate);
+}
+
+input[type='text'] {
+  width: 100%;
+  padding: 0.6em 0.2em;
+  border: none;
+  border-bottom: 1px solid var(--color-salvia);
+  background: transparent;
+  outline: none;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+input[type='text']:focus {
+  border-bottom-color: var(--color-granate);
+  box-shadow: 0 1px 0 0 var(--color-granate);
+}
+
+a {
+  color: var(--color-granate);
+}
+
+/* Animación reutilizable de entrada */
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Entrada inmediata al cargar la vista (no depende de scroll) */
+.entrada {
+  animation: aparecer 0.7s ease both;
+}
+
+/* Revelado al hacer scroll (lo activa JS con IntersectionObserver) */
+.revelar {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.revelar.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Transición entre vistas */
+.vista-enter-active,
+.vista-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.vista-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+
+.vista-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
